@@ -1,9 +1,4 @@
-#include <iostream>
-#include <curl/curl.h>
-#include <nlohmann/json.hpp>
-#include <sstream>
-#include <map>
-#include <algorithm>
+#include "sentiment.hpp" // contains all headers and relevant function definitions. 
 
 using json = nlohmann::json;
 // Curl callback function
@@ -32,9 +27,13 @@ std::string fetchTweets(const std::string& query, const std::string& bearerToken
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
 
         res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+        }
         curl_easy_cleanup(curl);
         curl_slist_free_all(headers);
     }
+    
     return readBuffer;
 }
 
