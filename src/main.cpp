@@ -17,7 +17,7 @@ static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* use
 std::string fetchTweets(const std::string& query, const std::string& bearerToken)
 {
     CURL* curl;
-    // CURLcode res;
+    CURLcode res;
     std::string readBuffer;
 
     curl = curl_easy_init();
